@@ -2,7 +2,7 @@
 title: "Analysis_Meteorites"
 output: html_notebook
 ---
-
+3.1 laoding data
 loading in clean datafile and reqired librarys
 
 ```{r}
@@ -11,15 +11,15 @@ raw_clean_data = read.csv("meteorite_landings_CLEAN.csv")
 ```
 
 
-10 largest metiorites within this data
+3.4 & 3.5 below
+wranglaing data & statistical analysis
 
+10 largest metiorites within this data
 ```{r}
 head(arrange(raw_clean_data, desc(mass_g)), 10)
 ```
 
 avarage mass of falling meteorites vs found meteorites
-
-
 ```{r}
 falling_meteorites = mean(filter(raw_clean_data, fall == "Fell")$mass_g)
 found_meteorits = mean(filter(raw_clean_data, fall == "Found")$mass_g)
@@ -47,6 +47,7 @@ get_meteorite_count = function(input_data, input_year){
 }
 ```
 
+4.1 test plans
 
 test plans
 current function get_meteorite_count can be tested by entering avaialbe test data with known values and observing the output.
@@ -58,6 +59,7 @@ insert invalid data,
 pass a string into the year parameter.
 ensure a date before records began 
 
+4.6 performing test
 
 ```{r}
 library(testthat)
@@ -71,6 +73,7 @@ test_that("function (get_meteorite_count) gives expected outputs", {
 ```
 
 tests failed, charichters, strings and logicals in the year parametr should throw errors
+4.6 revising code
 
 ```{r}
 refactor_get_meteorite_count = function(input_data, input_year){

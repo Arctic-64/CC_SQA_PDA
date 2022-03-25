@@ -3,9 +3,11 @@ library(tidyverse)
 library(assertr)
 library(testthat)
 
+#3.1 process data from external file
 meteorites = read.csv("meteorite_landings.csv")
 meteorites = janitor::clean_names(meteorites)
 
+#3.3 clean data
 meteorites = mutate(meteorites, geo_location = str_sub(geo_location, 2, -2))
 meteorites = separate(meteorites, geo_location, into = c("lattitude", "longditude"), sep = ", ")
 
@@ -24,3 +26,4 @@ verify(meteorites, has_all_names("id", "name", "mass_g", "fall", "year", "lattit
 print("TESTS PASSED")
 
 write.csv(meteorites, "meteorite_landings_CLEAN.csv")
+
