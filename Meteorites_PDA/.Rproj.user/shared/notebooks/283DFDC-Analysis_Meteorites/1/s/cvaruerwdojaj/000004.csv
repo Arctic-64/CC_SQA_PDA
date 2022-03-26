@@ -1,0 +1,7 @@
+"0","library(testthat)"
+"0","#test_that(""function (get_meteorite_count) gives expected outputs"", {"
+"0","#  expect_error(get_meteorite_count(raw_clean_data, ""2000""))"
+"0","#  expect_error(get_meteorite_count(raw_clean_data, ""asdf""))"
+"0","#  expect_error(get_meteorite_count(raw_clean_data, TRUE))"
+"0","#  expect_error(get_meteorite_count(c(1,2,3,4), 2000))"
+"0","#  })"

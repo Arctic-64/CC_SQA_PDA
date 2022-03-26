@@ -2,9 +2,9 @@ library(janitor)
 library(tidyverse)
 library(assertr)
 library(testthat)
-
+library(here)
 #3.1 process data from external file
-meteorites = read.csv("meteorite_landings.csv")
+meteorites = read.csv(here("raw_data/meteorite_landings.csv"))
 meteorites = janitor::clean_names(meteorites)
 
 #3.3 clean data
@@ -25,5 +25,5 @@ verify(meteorites, lattitude > -90.0 & lattitude < 90.0 & longditude > -180.0 & 
 verify(meteorites, has_all_names("id", "name", "mass_g", "fall", "year", "lattitude", "longditude"))
 print("TESTS PASSED")
 
-write.csv(meteorites, "meteorite_landings_CLEAN.csv")
+write.csv(meteorites, here("clean_data/meteorite_landings_CLEAN.csv"))
 
