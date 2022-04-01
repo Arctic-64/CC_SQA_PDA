@@ -1,5 +1,0 @@
-host = "db-postgresql-lon1-20135-do-user-7581050-0.b.db.ondigitalocean.com"
-port = 25061
-database = "meteorites_pool"
-creds_username = "meteorites_user"
-creds_password = "j4vdrkcilnflmcck"
