@@ -1,0 +1,28 @@
+library(here)
+library(ggplot2)
+library(tidyverse)
+
+students = read.csv("D:/UNIVERSITY/CodeClan/codeclan_work/week_05/day_1/students.csv")
+
+students %>%
+  ggplot() + aes(x=superpower, fill = school_year) + geom_bar(colour="black")
+
+olympics = read.csv("D:/UNIVERSITY/CodeClan/codeclan_work/week_05/day_1/olympics_overall_medals.csv")
+
+top_10 <- olympics %>%
+  filter(season == "Summer", medal == "Gold") %>%
+  arrange(desc(count)) %>%
+  top_n(10)
+
+top_10 %>%
+  ggplot() +
+  aes(x = team, y = count, fill = team) +
+  geom_col() +
+  labs( title = "\nMedals Won at the Summer Olympics",
+        x = "National Team",
+        y = "Number of Medals")+
+  theme(axis.text.x = element_blank())
+
+
+
+

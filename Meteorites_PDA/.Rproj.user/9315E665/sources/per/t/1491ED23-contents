@@ -1,0 +1,22 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(here)
+meteor <-  read_csv(here("clean_data/landings_CLEAN_additional_class_data.csv"))
+meteor
+```
+```{r}
+meteor %>%
+  group_by(fall) %>%
+  ggplot() +
+    aes(x = year, colour = fall) +
+  geom_density()
+```
+the plot above shows the discovery of falling meteorites was more frequent in the past most likely due to the visibility in the sky allowing for easier recording
+however near the year 2000, massive interest may have led to a boom in the dicvoery and excavation of meteorites for research.
+haveing gained substantial knowlage from this, the number of found metorites will decrease due to already being found or lack of previous levels of reserch interest.

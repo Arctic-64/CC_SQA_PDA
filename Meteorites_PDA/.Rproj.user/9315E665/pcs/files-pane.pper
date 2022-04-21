@@ -1,9 +1,9 @@
 {
-    "path" : "D:/UNIVERSITY/CodeClan/CC_SQA_PDA/Meteorites_PDA/scripts",
-    "sortOrder" : [
+    "path": "D:/UNIVERSITY/CodeClan/CC_SQA_PDA/Meteorites_PDA/clean_data",
+    "sortOrder": [
         {
-            "ascending" : true,
-            "columnIndex" : 2
+            "columnIndex": 2,
+            "ascending": true
         }
     ]
 }

@@ -1,0 +1,28 @@
+{
+    "id": "1491ED23",
+    "path": "D:/UNIVERSITY/CodeClan/CC_SQA_PDA/Meteorites_PDA/scripts/Meteorite_plotting.rmd",
+    "project_path": "scripts/Meteorite_plotting.rmd",
+    "type": "r_markdown",
+    "hash": "1345796264",
+    "contents": "",
+    "dirty": false,
+    "created": 1650320854398.0,
+    "source_on_save": false,
+    "relative_order": 2,
+    "properties": {
+        "tempName": "Untitled1",
+        "chunk_output_type": "inline",
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "21,165",
+        "scrollLine": "12"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1650322790,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1650322790648,
+    "read_only": false,
+    "read_only_alternatives": []
+}

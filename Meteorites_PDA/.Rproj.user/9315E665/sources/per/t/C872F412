@@ -1,23 +1,26 @@
 {
-    "collab_server" : "",
-    "contents" : "",
-    "created" : 1648775465415.000,
-    "dirty" : false,
-    "encoding" : "UTF-8",
-    "folds" : "",
-    "hash" : "97481451",
-    "id" : "C872F412",
-    "lastKnownWriteTime" : 1648775219,
-    "last_content_update" : 1648775219,
-    "path" : "D:/UNIVERSITY/CodeClan/CC_SQA_PDA/Meteorites_PDA/scripts/Meteorites_additional_data.R",
-    "project_path" : "scripts/Meteorites_additional_data.R",
-    "properties" : {
-        "cursorPosition" : "16,28",
-        "scrollLine" : "5",
-        "tempName" : "Untitled1"
+    "id": "C872F412",
+    "path": "D:/UNIVERSITY/CodeClan/CC_SQA_PDA/Meteorites_PDA/scripts/Meteorites_additional_data.R",
+    "project_path": "scripts/Meteorites_additional_data.R",
+    "type": "r_source",
+    "hash": "97481451",
+    "contents": "",
+    "dirty": false,
+    "created": 1648775465415.0,
+    "source_on_save": false,
+    "relative_order": 1,
+    "properties": {
+        "cursorPosition": "16,28",
+        "scrollLine": "5",
+        "tempName": "Untitled1",
+        "Source": "Source"
     },
-    "relative_order" : 1,
-    "source_on_save" : false,
-    "source_window" : "",
-    "type" : "r_source"
+    "folds": "",
+    "lastKnownWriteTime": 1648775219,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1648775219,
+    "read_only": false,
+    "read_only_alternatives": []
 }
