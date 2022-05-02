@@ -1,0 +1,54 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(palmerpenguins)
+library(tidyverse)
+library(ggplot2)
+library(janitor)
+library(e1071)
+library(gginference)
+
+penguins <- palmerpenguins::penguins 
+penguins <-  clean_names(penguins)
+
+summary(penguins)
+```
+
+```{r}
+ggplot(penguins, aes(x = species, y = bill_length_mm)) + 
+    geom_boxplot()
+```
+
+the Adelie penguin has the shortest beak length by far, the chinstrap has the longestet beak lenth but there is significant overlap with the gentoo pengiun.
+
+
+```{r}
+penguins %>%
+  filter(!is.na(bill_length_mm)) %>%
+  group_by(species) %>%
+  summarise(mean(bill_length_mm), median(bill_length_mm), sd(bill_length_mm), skewness(bill_length_mm))
+```
+
+the gentoo penguin has data moderatly skewwed to the right, the other two penguines have more ballenced data. 
+the standered deviations show that the data between penguins is simmilarly distributed.
+
+```{r}
+chinstrap <-  penguins %>%
+   filter(!is.na(bill_length_mm), species == "Chinstrap")
+gentoo <-  penguins %>%
+   filter(!is.na(bill_length_mm), species == "Gentoo")
+  
+px = t.test(chinstrap$bill_length_mm, gentoo$bill_length_mm)
+px
+
+ggttest(px)
+```
+
+P value is less than 0.05 and thus we reject the null hypothesis.
+the T value is greater than 2 so we can infer there is a significant difference betweeen the data.
+
+
+
