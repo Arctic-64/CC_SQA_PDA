@@ -1,0 +1,94 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(lubridate)
+library(here)
+library(stringr)
+library(fs)
+```
+
+```{r}
+toy_tranactions <- read.csv(here("raw_data/toy_transactions.csv"))
+toy_tranactions
+```
+
+```{r}
+toys_dated <- toy_tranactions %>%
+  mutate(date = make_date(year, month, day))
+toys_dated
+```
+
+```{r}
+
+toys_raw <- read.csv(here("raw_data/toys.csv"))
+
+toys <- toys_raw %>%
+  mutate(weight = as.numeric(substr(weight,1,nchar(weight)-2))) %>%
+  separate(
+  col = product,
+  into = c("product_name", "product_title"),
+  sep = " - ",
+  remove = FALSE,
+  convert = FALSE
+)
+
+
+toys
+```
+```{r}
+quality <- read_csv(here("raw_data/quality.csv"))
+
+quality <-  quality %>%
+  mutate(description = str_replace(description, "Quality:", "")) %>%
+  mutate(description = str_replace(description, "Awesome", "Good")) %>%
+    mutate(description = str_replace(description, "Awful", "Bad"))
+
+quality
+```
+```{r}
+dir_ls(here("raw_data"), regexp = "\\customers.csv$") %>% map_dfr(read_csv) -> customers
+
+customers
+
+```
+
+```{r}
+customers %>%
+  group_by(customer_country, customer_gender) %>%
+  mutate(
+    across(c("customer_age","customer_height_cm","customer_weight_kg"), ~replace_na(.x, median(.x, na.rm = TRUE)))
+  )
+```
+
+
+```{r}
+toys_joined <- left_join(toys_dated, customers, by = c("customer_id" = "id")) %>%
+  left_join(toys, by = c("toy_id" = "id")) %>%
+  left_join(quality, by = c("quality" = "id"))
+
+toys_joined
+```
+
+there are ethical and legal considerations to be made with this data,
+it can be classed as personal data s it has unique identifying information such as first and last names.
+these should be removed as customer ID provides anonymity while also providing the ability to distinguish between customers.
+this data should not be allowed into the hands of the public.
+
+
+```{r}
+colnames(toys_joined)
+
+toys_joined <-toys_joined %>%
+  select(-c("first_name", "last_name"))
+
+toys_joined
+```
+```{r}
+toys_joined %>%
+write.csv(here("clean_data/toys_joined.csv"))
+```
+

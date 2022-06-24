@@ -1,7 +1,13 @@
 ---
 title: "R Notebook"
-output: html_notebook
+output:
+  html_document:
+    df_print: paged
 ---
+
+```{r setup, include=FALSE} 
+knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
+```
 
 ```{r}
 library(palmerpenguins)
@@ -36,19 +42,69 @@ the gentoo penguin has data moderatly skewwed to the right, the other two pengui
 the standered deviations show that the data between penguins is simmilarly distributed.
 
 ```{r}
-chinstrap <-  penguins %>%
-   filter(!is.na(bill_length_mm), species == "Chinstrap")
-gentoo <-  penguins %>%
+Gentoo <-  penguins %>%
    filter(!is.na(bill_length_mm), species == "Gentoo")
+Adelie <-  penguins %>%
+   filter(!is.na(bill_length_mm), species == "Adelie")
   
-px = t.test(chinstrap$bill_length_mm, gentoo$bill_length_mm)
+px = t.test(Gentoo$bill_length_mm, Adelie$bill_length_mm)
 px
 
 ggttest(px)
 ```
 
+```{r}
+library(infer)
+
+null_dist <- penguins %>% 
+  filter(species == c("Gentoo", "Adelie")) %>%
+  specify(bill_length_mm ~ species) %>% 
+  hypothesize(null = "independence") %>% 
+  generate(reps = 1000, type = "permute") %>% 
+  calculate(stat = "diff in means", order = c("Gentoo", "Adelie"))
+
+observed_stat <- penguins %>% 
+  filter(species == c("Gentoo", "Adelie")) %>%
+  specify(bill_length_mm ~ species) %>% 
+  calculate(stat = "diff in means", order = c("Gentoo", "Adelie"))
+
+observed_stat
+
+p_value <- null_dist %>%
+  get_p_value(obs_stat = observed_stat, direction = "both")
+
+p_value
+
+null_dist %>%
+  visualise() +
+  shade_p_value(obs_stat = observed_stat, direction = "both")
+
+```
+
+
+H_0 null hipothasis, there is no significant difference between the bill lengths of the Gentoo and the Adelie penguins
+
+H_1 alternative hipothosis, there is a significant difference between the lengths of the bills of the Gentoo and adelie penguin
+
 P value is less than 0.05 and thus we reject the null hypothesis.
-the T value is greater than 2 so we can infer there is a significant difference betweeen the data.
+null hipotheosis is there is no significant difference between the penguins,
+the alternative apotheosis is that there is a significant difference between the bill lengths of the adelle and Gentoo penguins
+the T value is greater than 2 so we can infer there is a significant difference between the data.
 
+in the second test, permutation was used to create a simulated null distribution with 1000 reps.
+this is a process of re-randomization and resampaling different possible combinations of observed data.
+the p value was calculated to be zero which is likely due to lack of resolution in the infer packages ability.
+it is in line with the original tests statistic of p-value < 2.2e-16.
+from this we can reject H_0 and have found enough evidence to suggest that that the bill lenth between the Gentoo and Adslie penguins is significantly different.
 
+below is a correlation matrix of several variables associated with the penguins.
+in this pearson correlation we can see that flipper lenth and body mass are strongly correlated positively
+this makes sense as a heavier penguin may require more propulsion in the water thus requiring larger flippers.
+bill lenth also has a notable positive correlation with flipper lenth and body mass.
+
+```{r}
+penguins %>%
+  select(species, body_mass_g, flipper_length_mm, bill_depth_mm, bill_length_mm) %>%
+GGally::ggcorr(label = TRUE, method = c("pairwise", "pearson"))
+```
 

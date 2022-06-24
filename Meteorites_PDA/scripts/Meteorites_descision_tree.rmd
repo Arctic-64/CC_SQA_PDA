@@ -1,0 +1,81 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(rpart)
+library(rpart.plot)
+library(modelr)
+library(yardstick)
+library(here)
+library(caret)
+meteor <-  read_csv(here("clean_data/landings_CLEAN_additional_class_data.csv"))
+meteor
+
+shuffle_index <- sample(1:nrow(meteor))
+
+meteor_set <- meteor[shuffle_index, ] %>%
+  filter(fall %in% c("Fell", "Found")) %>%
+  mutate(class = as.factor(class)) %>%
+  mutate(fall_flag = as.factor(fall)) %>% 
+  select(fall_flag, mass_g, year, lattitude, longditude, class) %>%
+  na.omit()
+  
+meteor_set
+```
+
+```{r}
+meteor_set %>%
+  ggplot(aes(x = fall_flag)) +
+  geom_bar()
+
+## very unballenced dataset
+```
+
+
+```{r}
+#test_index <- sample(1:nrow(meteor_set), size = nrow(meteor_set)*0.2)
+
+## caret stratifies by default so should be a better option
+test_index <- createDataPartition(meteor_set$fall_flag, p = .7, list = FALSE)
+
+test  <- slice(meteor_set, test_index)
+train  <- slice(meteor_set, -test_index)
+
+## training data us used for the model to identify the trend in the data.
+## testing data is used to validate the end models performance by ensuring the model works on new data its never seen before.
+## a big risk is over fitting where a model will learn the training data with a very high accuracy.
+## however, this inhibits a models ability to generalise and thus the performance on real data becomes very poor.
+
+nrow(test)
+nrow(train)
+
+```
+
+```{r}
+meteor_fit <- rpart(fall_flag ~ class + mass_g + year, data = train, method = 'class', cp = 0.01)
+plotcp(meteor_fit)
+rpart.plot(meteor_fit, yesno = 2, faclen = 2)
+```
+```{r}
+test_pred <- test %>%
+                 add_predictions(meteor_fit, type = 'class')
+
+
+conf_mat <- test_pred %>%
+              conf_mat(truth = fall_flag, estimate = pred)
+conf_mat
+```
+this matrix shows that model has a tenancy to predict that a meteorite was found.
+this is not unexpected as the data is very unbalanced and the model will achive a higher success rate by erring on the side of found.
+the years appear to be higher in the tree and thus the larger predictors.
+this would make sense due to changes in technology, ability to detect, and scientific interest over time.
+found meteorites can also not be found again and there is a finite supply on earth.
+as interest increases, the number found also increases makeing them rarer and more difficult to find.
+
+
+the year appears at the top of the decision tree making it a factor explaining high variance in whether a meteorite was found or falling.
+composition appears further down the tree and mass does not appear to explain much variance at all. date certinly has more explanatory power with this data.

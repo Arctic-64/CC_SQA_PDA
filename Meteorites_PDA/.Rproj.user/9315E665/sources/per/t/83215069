@@ -1,0 +1,27 @@
+{
+    "id": "83215069",
+    "path": "D:/UNIVERSITY/CodeClan/CC_SQA_PDA/Meteorites_PDA/scripts/Analysis_Meteorites.Rmd",
+    "project_path": "scripts/Analysis_Meteorites.Rmd",
+    "type": "r_markdown",
+    "hash": "1502036282",
+    "contents": "",
+    "dirty": false,
+    "created": 1655819567514.0,
+    "source_on_save": false,
+    "relative_order": 6,
+    "properties": {
+        "chunk_output_type": "inline",
+        "cursorPosition": "72,1",
+        "scrollLine": "0",
+        "source_window_id": "",
+        "Source": "Source"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1648315385,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1648315385,
+    "read_only": false,
+    "read_only_alternatives": []
+}

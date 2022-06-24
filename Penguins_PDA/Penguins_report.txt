@@ -1,0 +1,25 @@
+PDA penguins task report
+
+basic analysis
+
+the data in the penguins dataset contained 3 species with a set of measurments
+the bill depth, bill lenths, body weight and flipper lenth.
+
+the analysis was centered around exploring the bill lenths of each species of penguin in relation to one another
+
+i generated a series of visulaisations for this investigation
+
+i had thought that bill lenths would vary between species an the result of my first visualisation seemed to support this idea.
+
+i then calculated summary statistics for all species to check for any anomolous data points or biases in the data
+
+following this i tested my hipothasis that the bill lenths between species where significantly different
+i selected two species, the gentoo and the adelie.
+
+i generated a null distrabution via permutation and procured a P-vlaue far below 0.05
+
+this allowed me to reject the null hipothasis that there was no significant differance between the means
+this was replaced with the alternative hipothasis which is the idea there is a significant diference between the bill lenths of the selected penguins.
+
+a corrolation matrix was then generated to investigate other variables.
+in this test, a strong positive relationship was discovered between the weight of a penguin and the flipper size.
