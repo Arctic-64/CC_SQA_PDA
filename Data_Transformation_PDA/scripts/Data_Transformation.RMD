@@ -61,14 +61,14 @@ customers %>%
   group_by(customer_country, customer_gender) %>%
   mutate(
     across(c("customer_age","customer_height_cm","customer_weight_kg"), ~replace_na(.x, median(.x, na.rm = TRUE)))
-  )
+  ) -> customers
 ```
 
 
 ```{r}
-toys_joined <- left_join(toys_dated, customers, by = c("customer_id" = "id")) %>%
-  left_join(toys, by = c("toy_id" = "id")) %>%
-  left_join(quality, by = c("quality" = "id"))
+toys_joined <- full_join(toys_dated, customers, by = c("customer_id" = "id")) %>%
+  full_join(toys, by = c("toy_id" = "id")) %>%
+  full_join(quality, by = c("quality" = "id"))
 
 toys_joined
 ```
@@ -83,7 +83,7 @@ this data should not be allowed into the hands of the public.
 colnames(toys_joined)
 
 toys_joined <-toys_joined %>%
-  select(-c("first_name", "last_name"))
+  select(-c("first_name", "last_name", "customer_weight_kg", "customer_height_cm"))
 
 toys_joined
 ```

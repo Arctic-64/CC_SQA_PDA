@@ -1,0 +1,81 @@
+library(tidyverse)
+library(modelr)
+library(rpart)
+
+
+classifier_data <- tibble(
+  threshold = roc_obj_3pred$thresholds,
+  sensitivity = roc_obj_3pred$sensitivities,
+  specificity = roc_obj_3pred$specificities
+)
+
+
+mortgage_1pred_model <- glm(accepted ~ tu_score, data = mortgage_data, family = binomial(link = 'logit'))
+
+mortgage_data_with_1pred <- mortgage_data %>%
+  add_predictions(mortgage_1pred_model, type = "response")
+
+roc_obj_1pred <- mortgage_data_with_1pred %>%
+  roc(response = accepted, predictor = pred)
+
+roc_curve <- ggroc(data = list(pred3 = roc_obj_3pred, pred1 = roc_obj_1pred), legacy.axes = TRUE) +
+  coord_fixed()
+
+
+
+classifier_data <- classifier_data %>%
+  rename(
+    tpr = sensitivity,
+    tnr = specificity,
+  ) %>%
+  mutate(
+    fpr = 1 - tnr,
+    fnr = 1 - tpr
+  )
+
+
+classifier_data <- classifier_data %>%
+  mutate(
+    exp_profit_per_pot_applicant = 
+      prob_pos * (tpr * tpp + fnr * fnp) + 
+      prob_neg * (tnr * tnp + fpr * fpp)
+  )
+
+classifier_data %>%
+  ggplot(aes(x = threshold, y = exp_profit_per_pot_applicant)) +
+  geom_line()
+
+
+set.seed90=(19)
+
+
+
+
+library(tidyverse)
+
+clean_thrones<- thrones %>% 
+  # Only keep variables of interest
+  select(c(sex, religion, occupation, social_status, allegiance_last, allegiance_switched, dth_flag, featured_episode_count, prominence)) %>% 
+  # Convert to factor level
+  mutate(sex = factor(sex, levels = c(1, 2, 9), labels = c("Male", "Female", "Unknown")),
+         religion = factor(religion, levels = c(0, 1, 3, 4, 5, 6, 7, 9), labels = c("Great Stallion", "Lord of Light", "Faith of the Seven", "Old Gods", "Drowned God", "Many Faced God", "Other", "Unknown")),
+         occupation = factor(occupation, levels = c(1, 2, 9), labels = c("Silk-collar", "Leather-collar", "Unknown")),
+         social_status = factor(social_status, levels = c(1, 2, 9), labels = c("Highborn", "Lowborn", "Unknown")),
+         allegiance_last = factor(allegiance_last, levels = c(1, 2, 3, 4, 5, 6, 7, 8, 9), labels = c("Stark", "Targaryen", "Night's Watch", "Lannister", "Greyjoy", "Bolton", "Frey", "Other", "Unknown")),
+         allegiance_switched = factor(allegiance_switched, levels = c(1, 2, 9), labels = c("No", "Yes", "Unknown")),
+         dth_flag = factor(dth_flag, levels = c(0, 1), labels = c("Survived", "Died"))) %>%
+  # Remove NAs 
+  na.omit()
+
+
+rpart.plot(thrones_fit,
+           yesno = 2,
+           fallen.leaves = TRUE,
+           faclen = 6,
+           digits = 4)
+
+rpart.rules(thrones_fit, cover = TRUE)
+
+
+library(ranger)
+
