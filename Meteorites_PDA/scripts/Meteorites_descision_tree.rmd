@@ -63,7 +63,7 @@ meteor_fit <- rpart(fall_flag ~ mass_g + year, data = train, method = 'class', c
 plotcp(meteor_fit)
 rpart.plot(meteor_fit, yesno = 2, faclen = 6, fallen.leaves = TRUE, extra = 101)
 ```
-4.3 training data tree generated
+4.3 / 4.6 training data tree generated
 the accuracy for this model on the training data is 87.93%
 the root node of this decision tree uses year as a predictor 
 this shows that year is one of the most important predictors for this model
@@ -78,7 +78,7 @@ furthermore, meteorites with lower mass values seem to have a higher probability
 this would make sense as a smaller meteorite would be more difficult to find on earth once landed or could burn up completely upon atmospheric entry
 
 
-4.2 test dataset confusion matrix
+4.2 / 4.6 test dataset confusion matrix
 
 ```{r}
 test_pred <- test %>%

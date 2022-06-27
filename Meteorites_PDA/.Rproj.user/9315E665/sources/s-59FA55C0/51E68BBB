@@ -3,7 +3,7 @@
     "path": "D:/UNIVERSITY/CodeClan/CC_SQA_PDA/Meteorites_PDA/scripts/Meteorites_descision_tree.rmd",
     "project_path": "scripts/Meteorites_descision_tree.rmd",
     "type": "r_markdown",
-    "hash": "1936950463",
+    "hash": "3458403773",
     "contents": "",
     "dirty": false,
     "created": 1655730470099.0,
@@ -14,15 +14,15 @@
         "chunk_output_type": "inline",
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "77,148",
+        "cursorPosition": "65,9",
         "scrollLine": "65"
     },
     "folds": "",
-    "lastKnownWriteTime": 1656371830,
+    "lastKnownWriteTime": 1656372204,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1656371830499,
+    "last_content_update": 1656372204400,
     "read_only": false,
     "read_only_alternatives": []
 }
